@@ -1,0 +1,175 @@
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Calculator</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+}
+
+.calculator{
+    background:#1f2937;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 15px 35px rgba(0,0,0,.5);
+}
+
+#display{
+    width:100%;
+    height:70px;
+    border:none;
+    outline:none;
+    background:#111827;
+    color:#fff;
+    font-size:30px;
+    text-align:right;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,80px);
+    gap:12px;
+}
+
+button{
+    height:70px;
+    border:none;
+    border-radius:15px;
+    font-size:24px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.number{
+    background:#374151;
+    color:white;
+}
+
+.operator{
+    background:#2563eb;
+    color:white;
+}
+
+.equal{
+    background:#16a34a;
+    color:white;
+}
+
+.clear{
+    background:#dc2626;
+    color:white;
+}
+
+button:active{
+    transform:scale(.95);
+}
+</style>
+</head>
+<body>
+
+<div class="calculator">
+
+<input type="text" id="display" readonly>
+
+<div class="buttons">
+
+<button class="clear" onclick="clearDisplay()">C</button>
+<button class="operator" onclick="deleteLast()">⌫</button>
+<button class="operator" onclick="append('%')">%</button>
+<button class="operator" onclick="append('/')">÷</button>
+
+<button class="number" onclick="append('7')">7</button>
+<button class="number" onclick="append('8')">8</button>
+<button class="number" onclick="append('9')">9</button>
+<button class="operator" onclick="append('*')">×</button>
+
+<button class="number" onclick="append('4')">4</button>
+<button class="number" onclick="append('5')">5</button>
+<button class="number" onclick="append('6')">6</button>
+<button class="operator" onclick="append('-')">−</button>
+
+<button class="number" onclick="append('1')">1</button>
+<button class="number" onclick="append('2')">2</button>
+<button class="number" onclick="append('3')">3</button>
+<button class="operator" onclick="append('+')">+</button>
+
+<button class="number" onclick="append('0')">0</button>
+<button class="number" onclick="append('.')">.</button>
+<button class="equal" onclick="calculate()">=</button>
+
+</div>
+
+</div>
+
+<script>
+
+let display=document.getElementById("display");
+
+function append(value){
+    display.value+=value;
+}
+
+function clearDisplay(){
+    display.value="";
+}
+
+function deleteLast(){
+    display.value=display.value.slice(0,-1);
+}
+
+function calculate(){
+
+    try{
+        display.value=eval(display.value);
+    }
+    catch{
+        display.value="Error";
+    }
+
+}
+
+document.addEventListener("keydown",function(e){
+
+    if((e.key>='0' && e.key<='9') || "+-*/.%".includes(e.key)){
+        append(e.key);
+    }
+
+    if(e.key==="Enter"){
+        calculate();
+    }
+
+    if(e.key==="Backspace"){
+        deleteLast();
+    }
+
+    if(e.key==="Escape"){
+        clearDisplay();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
